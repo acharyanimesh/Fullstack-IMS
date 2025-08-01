@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ApiService from '../service/ApiService';
 import Layout from '../components/Layout';
+import { formatCurrency } from '../utils/currency';
 
 const DashboardPage = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -112,7 +113,7 @@ const DashboardPage = () => {
                   <dl>
                     <dt className="text-sm font-medium text-gray-500 truncate">Total Value</dt>
                     <dd className="text-lg font-medium text-gray-900">
-                      ${dashboardData?.totalValue || 0}
+                      {formatCurrency(dashboardData?.totalValue || 0)}
                     </dd>
                   </dl>
                 </div>
@@ -120,7 +121,7 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          <div className="bg-white overflow-hidden shadow rounded-lg">
+          {/* <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -140,7 +141,7 @@ const DashboardPage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
@@ -208,7 +209,7 @@ const DashboardPage = () => {
                         <p className="text-sm text-gray-500">Stock: {product.stockQuantity}</p>
                       </div>
                       <span className="text-sm font-medium text-green-600">
-                        ${product.price}
+                        {formatCurrency(product.price)}
                       </span>
                     </div>
                   ))}

@@ -39,6 +39,12 @@ public class SecurityConfig {
     @Autowired
     private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
+    // Allows or blocks requests from other websites (CORS-Cross-Origin Resource Sharing.)
+    // Browsers protect users from unknown sources
+    // Sprina ma Frontend lai Backend sanga communicate garaucha
+    // Spring Security ma by default csrf is enabled. (CSRF-Cross-Site Request Forgery)
+    // CSRF is a protection against attacks.
+    // If you disable csrf, you can send requests from Postman.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())

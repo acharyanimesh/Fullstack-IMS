@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { Button, Table, Input, Select, Alert, Pagination } from '../components/ui';
 import ApiService from '../service/ApiService';
+import { formatCurrency } from '../utils/currency';
 
 const ProductListPage = () => {
   const [products, setProducts] = useState([]);
@@ -78,7 +79,7 @@ const ProductListPage = () => {
         }
       } catch (error) {
         console.error('Error deleting product:', error);
-        setError('Failed to delete product');
+        setError(error.message || 'Failed to delete product');
       }
     }
   };
@@ -103,7 +104,7 @@ const ProductListPage = () => {
       header: 'Price',
       accessor: 'price',
       render: (product) => (
-        <span className="text-green-600 font-medium">${product.price}</span>
+        <span className="text-green-600 font-medium">{formatCurrency(product.price)}</span>
       )
     },
     {

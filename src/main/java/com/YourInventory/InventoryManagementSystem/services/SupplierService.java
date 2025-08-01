@@ -76,9 +76,9 @@ public class SupplierService {
             throw new NameValueRequiredException("Supplier name is required");
         }
 
-        if (supplierDTO.getContactInfo() == null || supplierDTO.getContactInfo().trim().isEmpty()) {
-            throw new NameValueRequiredException("Supplier contact info is required");
-        }
+        // if (supplierDTO.getContactInfo() == null || supplierDTO.getContactInfo().trim().isEmpty()) {
+        //     throw new NameValueRequiredException("Supplier contact info is required");
+        // }
 
         // Check if supplier with same name already exists
         if (supplierRepository.existsByNameIgnoreCase(supplierDTO.getName().trim())) {
@@ -87,7 +87,7 @@ public class SupplierService {
 
         Supplier supplier = Supplier.builder()
                 .name(supplierDTO.getName().trim())
-                .contactInfo(supplierDTO.getContactInfo().trim())
+                // .contactInfo(supplierDTO.getContactInfo().trim())
                 .address(supplierDTO.getAddress() != null ? supplierDTO.getAddress().trim() : null)
                 .build();
 

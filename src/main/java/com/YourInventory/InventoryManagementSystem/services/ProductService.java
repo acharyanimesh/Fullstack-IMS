@@ -1,6 +1,7 @@
 package com.YourInventory.InventoryManagementSystem.services;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -17,14 +18,19 @@ import com.YourInventory.InventoryManagementSystem.exceptions.NameValueRequiredE
 import com.YourInventory.InventoryManagementSystem.exceptions.NotFoundException;
 import com.YourInventory.InventoryManagementSystem.model.Category;
 import com.YourInventory.InventoryManagementSystem.model.Product;
+import com.YourInventory.InventoryManagementSystem.model.Transaction;
 import com.YourInventory.InventoryManagementSystem.repositories.CategoryRepository;
 import com.YourInventory.InventoryManagementSystem.repositories.ProductRepository;
+import com.YourInventory.InventoryManagementSystem.repositories.TransactionRepository;
 
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -167,6 +173,11 @@ public class ProductService {
     public Response deleteProduct(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
+                List<Transaction> transactions = transactionRepository.findByProductId(productId);
+
+                if((Objects.nonNull(transactions))&&(transactions.size() > 0)){
+                    throw new NameValueRequiredException("Product is associated with a transaction. Please delete the transaction first.");
+                }
 
         productRepository.delete(product);
 
